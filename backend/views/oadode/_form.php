@@ -42,7 +42,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($modelDescription, 'ecl_group')->textInput() ?>
 
-    <?= $form->field($modelDescription, 'ecl_item')->textInput() ?>
+    <?= $form->field($modelDescription, 'ecl_item')->dropDownList(
+            ['a' => 'Item A', 'b' => 'Item B', 'c' => 'Item C']
+    ) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ArrayDataProvider;
 
 /**
  * OadodeController implements the CRUD actions for Oadode model.
@@ -59,17 +60,14 @@ class OadodeController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $modelDescription = new DescriptionOfGoods();
-        $posts = Yii::$app->request->post();
-        if (!empty(Yii::$app->request->post())) {
-            $posts['DescriptionOfGoods']['application_id'] = $posts['Oadode']['application_id'];
-            $posts['DescriptionOfGoods']['customer_id'] = $posts['Oadode']['customer_id'];
-            $posts['DescriptionOfGoods']['user_id'] = $posts['Oadode']['user_id'];
-        }
-        
+        $modelDescriptions = DescriptionOfGoods::findOne([
+            'application_id' => $model->application_id,
+            'customer_id' => $model->customer_id,
+            'user_id' => $model->user_id,
+        ]);
         return $this->render('view', [
             'model' => $model,
-            'modelDescription' => $modelDescription
+            'modelDescription' => $modelDescriptions
         ]);
     }
 
@@ -111,21 +109,29 @@ class OadodeController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $modelDescription = new DescriptionOfGoods();
-        $posts = Yii::$app->request->post();
-        if (!empty(Yii::$app->request->post())) {
-            $posts['DescriptionOfGoods']['application_id'] = $posts['Oadode']['application_id'];
-            $posts['DescriptionOfGoods']['customer_id'] = $posts['Oadode']['customer_id'];
-            $posts['DescriptionOfGoods']['user_id'] = $posts['Oadode']['user_id'];
-        }
-
+        $modelDescriptions = DescriptionOfGoods::findOne([
+            'application_id' => $model->application_id,
+            'customer_id' => $model->customer_id,
+            'user_id' => $model->user_id,
+        ]);
+        $d_id = $modelDescriptions->id;       
+         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $data = [
+                'application_id' => $_POST['Oadode']['application_id'],
+                'customer_id' => $_POST['Oadode']['customer_id'],
+                'user_id' => $_POST['Oadode']['user_id'],
+                'description' => $_POST['DescriptionOfGoods']['description'],
+                'ecl_group' => $_POST['DescriptionOfGoods']['ecl_group'],
+                'ecl_item' => $_POST['DescriptionOfGoods']['ecl_item'],
+            ];
+            DescriptionOfGoods::updateAll($data,['like','id', $d_id] ); 
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
-            'modelDescription' =>$modelDescription
+            'modelDescription' =>$modelDescriptions
         ]);
     }
 

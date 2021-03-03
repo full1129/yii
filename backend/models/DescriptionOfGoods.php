@@ -31,8 +31,9 @@ class DescriptionOfGoods extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['application_id', 'customer_id', 'user_id'], 'integer'],
-            [['description', 'ecl_group', 'ecl_item'], 'string', 'max' => 255],
+            [['application_id', 'customer_id', 'user_id', 'ecl_group'], 'integer'],
+            [['description', 'ecl_group', 'ecl_item'], 'required'],
+            [['ecl_item'] , 'integer','min' => 1, 'max' =>9]
         ];
     }
 

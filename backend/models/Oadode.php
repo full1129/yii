@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-
 /**
  * This is the model class for table "oadode".
  *
@@ -65,4 +64,5 @@ class Oadode extends \yii\db\ActiveRecord
             'lang' => 'Lang',
         ];
     }
+
 }

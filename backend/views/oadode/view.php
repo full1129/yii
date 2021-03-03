@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= DetailView::widget([
         'model' => $model,
-        'modelDescription' => $modelDescription,
+        // 'modelDescription' => $modelDescription,
         'attributes' => [
             'id',
             'application_id',
@@ -44,9 +44,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'application_type',
             'business_title',
             'lang',
-            'description',
-            'ecl_group',
-            'ecl_item'
+            [
+                'attribute'=>'description',
+                'value'=>$modelDescription->description,
+            ],
+            [
+                'attribute'=>'ecl_group',
+                'value'=>$modelDescription->ecl_group,
+            ],
+            [
+                'attribute'=>'ecl_item',
+                'value'=>$modelDescription->ecl_item,
+            ],
         ],
     ]) ?>
 
